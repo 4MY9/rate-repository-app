@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
   },
   flexItemA: {
     padding: 20,
-    backgroundColor: '#24292e'
+    backgroundColor: '#24292e',
+
   },
   innerText: {
     color: '#FFFFFF',
@@ -47,14 +48,29 @@ const AppBarTab = () => {
   
   const signing = () =>{
     if (currentUser === null){
-      return <View style={styles.flexItemA}>
-      <Link to="/signin">
-       <Text style={styles.innerText}>Sign in</Text></Link>
-       </View>
+      return <><View style={styles.flexItemA}>
+        <Link to="/signin">
+          <Text style={styles.innerText}>Sign in</Text></Link>
+      </View><View style={styles.flexItemA}>
+          <Link to="/signup">
+            <Text style={styles.innerText}>Sign up</Text></Link>
+        </View></>
     }
-    return <View style={styles.flexItemA}>
-      <Pressable onPress={onPressFunction}><Text style={styles.innerText}>Sign out</Text></Pressable>
-        </View>
+    return <><View style={styles.flexItemA}>
+      <Link to="/review">
+        <Text style={styles.innerText}>Create a review</Text></Link>
+    </View>
+    <View style={styles.flexItemA}>
+      <Link to="/myreviews">
+        <Text style={styles.innerText}>My reviews</Text></Link>
+    </View>
+    <View style={styles.flexItemA}>
+        <Pressable onPress={onPressFunction}><Text style={styles.innerText}>Sign out</Text></Pressable>
+      </View></>
+      
+         
+         
+        
   }
     
   return <View style={styles.container}>

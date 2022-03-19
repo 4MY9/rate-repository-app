@@ -1,19 +1,22 @@
-
-import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import useSignUp from '../hooks/useSignUp';
 import useSignIn from '../hooks/useSignIn';
 import { useNavigate } from "react-router-native";
 
-const SignIn = () => {
+const SignUp = () => {
+  const [signUp] = useSignUp();
   const [signIn] = useSignIn();
   const navigate = useNavigate();
   const onSubmit = async (values) => {
     
     const { username, password } = values;
     try {
-      const { data } = await signIn({ username, password });
+      const { data } = await signUp({ username, password });
       console.log(data);
+      const { data2 } = await signIn({ username, password });
+      console.log(data2)
       navigate("/");
     } 
     catch (e) {
@@ -24,6 +27,7 @@ const SignIn = () => {
   const initialValues = {
     username: '',
     password: '',
+    passwordConfirm:''
   };
 
   const validationSchema = yup.object().shape({
@@ -33,13 +37,17 @@ const SignIn = () => {
     password: yup
       .string()
       .required('Password is required'),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref('password'), null])
+      .required('Password confirm is required')
   });
   
 
     
   return <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-  {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+  {({ handleSubmit }) => <SignUpForm onSubmit={handleSubmit} />}
 </Formik>
 };
 
-export default SignIn;
+export default SignUp;
